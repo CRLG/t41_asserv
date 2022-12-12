@@ -1,5 +1,8 @@
 # Prerequisites
 *.d
+*.creator.user
+*.elf
+*.hex
 
 # Compiled Object files
 *.slo
