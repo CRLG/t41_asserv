@@ -8,7 +8,6 @@ class CAsservissement : public CAsservissementBase
 public:
     CAsservissement();
 
-    void asserv();
     /*virtual*/ void Init();
 };
 

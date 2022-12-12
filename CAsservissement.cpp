@@ -31,14 +31,6 @@ CAsservissement::CAsservissement()
     Init();
 }
 
-// _________________________________________________
-void CAsservissement::asserv()
-{
-    // TODO
-    //Serial.printf("%d : CAsservissement::asserv()\n", millis());
-}
-
-
 //___________________________________________________________________________
 /*!
    \brief Initialisation
@@ -52,6 +44,7 @@ void CAsservissement::Init(void)
 
     CAsservissementBase::Init();
 
+    te = 0.001; // 1msec
     // initialisation des paramètres de l'asservissement
     cde_max = 100;				// %	Commande maximum normalisée pour saturer la régulation
     cde_min = -100 ;			// %	Commande minimum normalisée pour saturer la régulation

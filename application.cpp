@@ -200,7 +200,7 @@ void CApplication::Sequenceur(void)
     cpt1msec++;
     if (cpt1msec >= TEMPO_1msec) {
         cpt1msec = 0;
-        m_asservissement.asserv();
+        m_asservissement.CalculsMouvementsRobots();
     }
 
     // ______________________________
