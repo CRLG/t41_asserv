@@ -18,6 +18,7 @@ public:
     void page_commande_mouvements();
     void page_reglage_coefs();
     void page_data_logger();
+    void page_codeurs();
 
     void page_kp_distance();
     void page_ki_distance();
@@ -48,8 +49,16 @@ public:
     bool cde_mot_GD_P3();
 
     bool force_asserv_manuel();
-    bool cde_distance();
-    bool cde_angle();
+    bool cde_distance1();
+    bool cde_distance2();
+    bool cde_distance3();
+    bool cde_distance4();
+    bool cde_angle1();
+    bool cde_angle2();
+    bool cde_angle3();
+    bool cde_angle4();
+    bool cde_angle5();
+    bool cde_angle6();
 
     bool start_logger();
     bool stop_logger();
@@ -62,6 +71,9 @@ public:
     bool action_set_Ki_distance(double val);
     bool action_set_Kp_angle(double val);
     bool action_set_Ki_angle(double val);
+
+    bool affiche_codeurs();
+    bool raz_codeurs();
 
     void affiche_menu();
 

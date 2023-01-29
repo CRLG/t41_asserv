@@ -22,6 +22,7 @@ void CDebugSerial::page_principale()
     DECLARE_OPTION('a', "Commande moteur", CDebugSerial::page_commande_moteurs)
     DECLARE_OPTION('z', "Commande mouvements", CDebugSerial::page_commande_mouvements)
     DECLARE_OPTION('e', "Coeficients Asserv", CDebugSerial::page_reglage_coefs)
+    DECLARE_OPTION('c', "Codeurs de position", CDebugSerial::page_codeurs)
     DECLARE_OPTION('l', "Data Logger", CDebugSerial::page_data_logger)
 }
 
@@ -61,8 +62,16 @@ void CDebugSerial::page_commande_mouvements()
 {
     DECLARE_PAGE("Commande mouvements", CDebugSerial::page_commande_mouvements)
     DECLARE_ACTION('a', "Arrêt moteurs / Asserv manuel", CDebugSerial::arret_moteurs)
-    DECLARE_ACTION('q', "Commande Distance", CDebugSerial::cde_distance)
-    DECLARE_ACTION('w', "Commande Angle", CDebugSerial::cde_angle)
+    DECLARE_ACTION('q', "CommandeMouvementDistanceAngle(10, 0)", CDebugSerial::cde_distance1)
+    DECLARE_ACTION('s', "CommandeMouvementDistanceAngle(20, 0)", CDebugSerial::cde_distance2)
+    DECLARE_ACTION('d', "CommandeMouvementDistanceAngle(50, 0)", CDebugSerial::cde_distance3)
+    DECLARE_ACTION('f', "CommandeMouvementDistanceAngle(100, 0)", CDebugSerial::cde_distance4)
+    DECLARE_ACTION('w', "CommandeMouvementDistanceAngle(0, PI/4.)", CDebugSerial::cde_angle1)
+    DECLARE_ACTION('x', "CommandeMouvementDistanceAngle(0, PI/2.)", CDebugSerial::cde_angle2)
+    DECLARE_ACTION('c', "CommandeMouvementDistanceAngle(0, PI)", CDebugSerial::cde_angle3)
+    DECLARE_ACTION('v', "CommandeMouvementDistanceAngle(0, -PI/4.)", CDebugSerial::cde_angle4)
+    DECLARE_ACTION('b', "CommandeMouvementDistanceAngle(0, PI/2.)", CDebugSerial::cde_angle5)
+    DECLARE_ACTION('n', "CommandeMouvementDistanceAngle(0, -PI)", CDebugSerial::cde_angle6)
 }
 
 void CDebugSerial::page_reglage_coefs()
@@ -111,6 +120,13 @@ void CDebugSerial::page_data_logger()
     DECLARE_ACTION('x', "Synchro logger ON", CDebugSerial::synchro_logger_on)
 }
 
+void CDebugSerial::page_codeurs()
+{
+    DECLARE_PAGE("Codeurs de position", CDebugSerial::page_codeurs)
+    DECLARE_ACTION('a', "Affiche position codeurs", CDebugSerial::affiche_codeurs)
+    DECLARE_ACTION('r', "RAZ codeurs G & D", CDebugSerial::raz_codeurs)
+}
+
 
 // ====================================================================
 //                    ACTIONS
@@ -139,8 +155,16 @@ bool CDebugSerial::cde_mot_GD_P1()   { Application.m_asservissement.CommandeManu
 bool CDebugSerial::cde_mot_GD_P2()   { Application.m_asservissement.CommandeManuelle(+25, +25); return true; }
 bool CDebugSerial::cde_mot_GD_P3()   { Application.m_asservissement.CommandeManuelle(+50, +50); return true; }
 
-bool CDebugSerial::cde_distance()    { Application.m_asservissement.CommandeMouvementDistanceAngle(50, 0); return true; }
-bool CDebugSerial::cde_angle()       { Application.m_asservissement.CommandeMouvementDistanceAngle(0, PI/2.); return true; }
+bool CDebugSerial::cde_distance1()    { Application.m_asservissement.CommandeMouvementDistanceAngle(10, 0); return true; }
+bool CDebugSerial::cde_distance2()    { Application.m_asservissement.CommandeMouvementDistanceAngle(20, 0); return true; }
+bool CDebugSerial::cde_distance3()    { Application.m_asservissement.CommandeMouvementDistanceAngle(50, 0); return true; }
+bool CDebugSerial::cde_distance4()    { Application.m_asservissement.CommandeMouvementDistanceAngle(100, 0); return true; }
+bool CDebugSerial::cde_angle1()       { Application.m_asservissement.CommandeMouvementDistanceAngle(0, PI/4.); return true; }
+bool CDebugSerial::cde_angle2()       { Application.m_asservissement.CommandeMouvementDistanceAngle(0, PI/2.); return true; }
+bool CDebugSerial::cde_angle3()       { Application.m_asservissement.CommandeMouvementDistanceAngle(0, PI); return true; }
+bool CDebugSerial::cde_angle4()       { Application.m_asservissement.CommandeMouvementDistanceAngle(0, -PI/4.); return true; }
+bool CDebugSerial::cde_angle5()       { Application.m_asservissement.CommandeMouvementDistanceAngle(0, -PI/2.); return true; }
+bool CDebugSerial::cde_angle6()       { Application.m_asservissement.CommandeMouvementDistanceAngle(0, -PI); return true; }
 
 bool CDebugSerial::start_logger()       { Application.m_data_logger.start(); return true; }
 bool CDebugSerial::stop_logger()        { Application.m_data_logger.stop(); return true; }
@@ -149,6 +173,7 @@ bool CDebugSerial::synchro_logger_off() { Application.m_asservissement.m_automat
 bool CDebugSerial::synchro_logger_on()  { Application.m_asservissement.m_automatic_start_logger = true; return true; }
 
 
+// _________________________________________________
 bool CDebugSerial::affiche_coefs_asserv()
 {
     _printf("Coef distance Kp=%f / Ki=%f\n\r",  Application.m_asservissement.kp_distance,
@@ -160,8 +185,7 @@ bool CDebugSerial::affiche_coefs_asserv()
     return true;
 }
 
-
-
+// _________________________________________________
 bool CDebugSerial::action_set_Kp_distance(double val)
 {
     _printf("Changement de la valeur du paramètre kp_distance: %f\n\r", val);
@@ -169,6 +193,7 @@ bool CDebugSerial::action_set_Kp_distance(double val)
     return true;
 }
 
+// _________________________________________________
 bool CDebugSerial::action_set_Ki_distance(double val)
 {
     _printf("Changement de la valeur du paramètre ki_distance: %f\n\r", val);
@@ -176,6 +201,7 @@ bool CDebugSerial::action_set_Ki_distance(double val)
     return true;
 }
 
+// _________________________________________________
 bool CDebugSerial::action_set_Kp_angle(double val)
 {
     _printf("Changement de la valeur du paramètre kp_angle: %f\n\r", val);
@@ -183,6 +209,7 @@ bool CDebugSerial::action_set_Kp_angle(double val)
     return true;
 }
 
+// _________________________________________________
 bool CDebugSerial::action_set_Ki_angle(double val)
 {
     _printf("Changement de la valeur du paramètre ki_angle: %f\n\r", val);
@@ -190,6 +217,23 @@ bool CDebugSerial::action_set_Ki_angle(double val)
     return true;
 }
 
+// _________________________________________________
+bool CDebugSerial::affiche_codeurs()
+{
+    _printf("CodeurG =%d / CodeurD=%d\n\r", Application.m_codeurs.read_CodeurGauche(),
+                                            Application.m_codeurs.read_CodeurDroit());
+    _printf("Codeur3 =%d / Codeur4=%d\n\r", Application.m_codeurs.read_Codeur3(),
+                                            Application.m_codeurs.read_Codeur4());
+    return true;
+}
+
+// _________________________________________________
+bool CDebugSerial::raz_codeurs()
+{
+    Application.m_codeurs.reset_codeurs_G_D();
+    affiche_codeurs();
+    return true;
+}
 
 // _________________________________________________
 // Fonction appelée à chaque fois qu'un octet arrive sur la RS232

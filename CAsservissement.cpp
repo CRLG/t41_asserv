@@ -29,7 +29,7 @@ const float CAsservissementBase::ini_conv_erreur_angle_vitesse_2_cur[NBRE_POINTS
 CAsservissement::CAsservissement()
 {
     Init();
-    m_automatic_start_logger = false;
+    m_automatic_start_logger = true;
 }
 
 //___________________________________________________________________________
