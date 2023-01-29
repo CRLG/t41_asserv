@@ -1,5 +1,6 @@
 .
 ext/CppRobLib/common-rob
+ext/CppRobLib/ConsoleInteractiveMenu
 ext/teensylib/cores/teensy4
 ext/teensylib/cores/teensy4/avr
 ext/teensylib/cores/teensy4/debug

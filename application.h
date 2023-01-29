@@ -7,6 +7,7 @@
 #include "CAsservissement.h"
 #include "CRoues.h"
 #include "debug_serial.h"
+#include "data_logger.h"
 
 
 #define PIN_LED1      (41)
@@ -62,6 +63,7 @@ public:
     CAsservissement     m_asservissement;
     CDebugSerial        m_debug_serial;
     CRoues              m_roues;
+    CDataLogger         m_data_logger;
 };
 
 extern CApplication Application;

@@ -4,6 +4,7 @@
 #include "CGlobale.h"
 
 #define RESOL_PWM 1024
+#define POURCENT2PWM (RESOL_PWM/100.)
 
 //___________________________________________________________________________
 /*!
@@ -30,13 +31,13 @@ void CRoues::AdapteCommandeMoteur_G(float vitesse)
         // TODO
         digitalWrite(PIN_Mot1_Sens1, 0);
         digitalWrite(PIN_Mot1_Sens2, 1);
-        analogWrite(PIN_Mot1_PWM, vitesse/100. * RESOL_PWM);
+        analogWrite(PIN_Mot1_PWM, vitesse * POURCENT2PWM);
     }
     else if (vitesse < 0) {
         // TODO
         digitalWrite(PIN_Mot1_Sens1, 1);
         digitalWrite(PIN_Mot1_Sens2, 0);
-        analogWrite(PIN_Mot1_PWM, (vitesse/(-100.0) * RESOL_PWM));
+        analogWrite(PIN_Mot1_PWM, -vitesse * POURCENT2PWM);
     }
     else { 					// Mise en court circuit du pont en H
         // TODO
@@ -61,12 +62,12 @@ void CRoues::AdapteCommandeMoteur_D(float vitesse)
     if (vitesse > 0) {
         digitalWrite(PIN_Mot2_Sens1, 1);
         digitalWrite(PIN_Mot2_Sens2, 0);
-        analogWrite(PIN_Mot2_PWM, (vitesse/100.0) * RESOL_PWM);
+        analogWrite(PIN_Mot2_PWM, vitesse * POURCENT2PWM);
     }
     else if (vitesse < 0) {
         digitalWrite(PIN_Mot2_Sens1, 0);
         digitalWrite(PIN_Mot2_Sens2, 1);
-        analogWrite(PIN_Mot2_PWM, (vitesse/(-100.0) * RESOL_PWM));
+        analogWrite(PIN_Mot2_PWM, -vitesse * POURCENT2PWM);
     }
     else { 					// Mise en court circuit du pont en H
         digitalWrite(PIN_Mot2_Sens1, 1);

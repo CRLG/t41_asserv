@@ -29,6 +29,7 @@ const float CAsservissementBase::ini_conv_erreur_angle_vitesse_2_cur[NBRE_POINTS
 CAsservissement::CAsservissement()
 {
     Init();
+    m_automatic_start_logger = false;
 }
 
 //___________________________________________________________________________
@@ -44,7 +45,7 @@ void CAsservissement::Init(void)
 
     CAsservissementBase::Init();
 
-    te = 0.001; // 1msec
+    te = 0.001; // 1msec -> à mettre en cohérence avec la fréquence d'appel de l'asserv depuis le séquenceur
     // initialisation des paramètres de l'asservissement
     cde_max = 100;				// %	Commande maximum normalisée pour saturer la régulation
     cde_min = -100 ;			// %	Commande minimum normalisée pour saturer la régulation
@@ -98,3 +99,62 @@ void CAsservissement::Init(void)
     Application.m_roues.resetCodeurs();
 }
 
+
+//___________________________________________________________________________
+/*!
+   \brief Initialisation
+
+   \param --
+   \return --
+*/
+void CAsservissement::CalculsMouvementsRobots()
+{
+    // TODO : s'il y a des choses à faire avant
+
+    CAsservissementBase::CalculsMouvementsRobots();   // là, c'est l'appel de l'asservissement génériques (commun Grosbot / Minibot)
+
+    // TODO : s'il y a des choses à faire après (logguer des data, ...)
+}
+
+
+//___________________________________________________________________________
+void CAsservissement::CommandeMouvementXY(float x, float y)
+{
+   if (m_automatic_start_logger) Application.m_data_logger.start();
+   CAsservissementBase::CommandeMouvementXY(x, y);
+}
+
+//___________________________________________________________________________
+void CAsservissement::CommandeMouvementDistanceAngle(float distance, float angle)
+{
+    if (m_automatic_start_logger) Application.m_data_logger.start();
+    CAsservissementBase::CommandeMouvementDistanceAngle(distance, angle);
+}
+
+//___________________________________________________________________________
+void CAsservissement::CommandeMouvementXY_A(float x, float y)
+{
+    if (m_automatic_start_logger) Application.m_data_logger.start();
+    CAsservissementBase::CommandeMouvementXY_A(x, y);
+}
+
+//___________________________________________________________________________
+void CAsservissement::CommandeMouvementXY_B(float x, float y)
+{
+    if (m_automatic_start_logger)  Application.m_data_logger.start();
+    CAsservissementBase::CommandeMouvementXY_B(x, y);
+}
+
+//___________________________________________________________________________
+void CAsservissement::CommandeMouvementXY_TETA(float x, float y, float teta)
+{
+    if (m_automatic_start_logger) Application.m_data_logger.start();
+    CAsservissementBase::CommandeMouvementXY_TETA(x, y, teta);
+}
+
+//___________________________________________________________________________
+void CAsservissement::CommandeVitesseMouvement(float vit_avance, float vit_angle)
+{
+    if (m_automatic_start_logger)  Application.m_data_logger.start();
+    CAsservissementBase::CommandeVitesseMouvement(vit_avance, vit_angle);
+}

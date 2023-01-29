@@ -72,8 +72,11 @@ void before_transmit(uint16_t address)
     Serial.printf("before_transmit");
 
     int i=0;
-    slave_tx_buffer[i++]++;
-    slave_tx_buffer[i++]++;
+    //slave_tx_buffer[i++]++;
+    //slave_tx_buffer[i++]++;
+    slave_tx_buffer[i++] = 0xBC;
+    slave_tx_buffer[i++] = 0xDE;
+    slave_tx_buffer[i++] = 0xFF;
 
 /*
     slave_tx_buffer[i++] = 0x12;
@@ -124,7 +127,7 @@ void CApplication::init(void)
 
     //m_moteurs.init();
     m_codeurs.init();
-    m_debug_serial.affiche_menu();
+    //m_debug_serial.affiche_menu();
 
     // Changement dynamique de la fréquence d'horloge
     // (peut être changée en live en plein milieu d'exécution du programme)
@@ -201,6 +204,7 @@ void CApplication::Sequenceur(void)
     if (cpt1msec >= TEMPO_1msec) {
         cpt1msec = 0;
         m_asservissement.CalculsMouvementsRobots();
+        m_data_logger.step();
     }
 
     // ______________________________

@@ -5,6 +5,8 @@ CAsservissement.cpp
 CAsservissement.h
 CCodeurs.cpp
 CCodeurs.h
+data_logger.cpp
+data_logger.h
 debug_serial.cpp
 debug_serial.h
 main.cpp
@@ -17,6 +19,8 @@ ext/CppRobLib/common-rob/CAsservissementBase.cpp
 ext/CppRobLib/common-rob/CAsservissementBase.h
 ext/CppRobLib/common-rob/CRouesBase.cpp
 ext/CppRobLib/common-rob/CRouesBase.h
+ext/CppRobLib/ConsoleInteractiveMenu/console_interaction.h
+ext/CppRobLib/ConsoleInteractiveMenu/console_interaction.cpp
 
 ext/teensylib/cores/teensy4/Arduino.h
 ext/teensylib/cores/teensy4/AudioStream.cpp

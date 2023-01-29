@@ -51,6 +51,7 @@ INCLUDE_PATHS += -I./sources
 INCLUDE_PATHS += -I./ext
 INCLUDE_PATHS += -I./ext/CppRobLib
 INCLUDE_PATHS += -I./ext/CppRobLib/common-rob
+INCLUDE_PATHS += -I./ext/CppRobLib/ConsoleInteractiveMenu/
 
 INCLUDE_PATHS += -I$(TEENSYLIB_PATH)/cores
 INCLUDE_PATHS += -I$(TEENSYLIB_PATH)/cores/teensy4
@@ -81,9 +82,11 @@ CPP_FILES += ./CAsservissement.cpp
 CPP_FILES += ./CCodeurs.cpp
 CPP_FILES += ./debug_serial.cpp
 CPP_FILES += ./CRoues.cpp
+CPP_FILES += ./data_logger.cpp
 
 CPP_FILES += ./ext/CppRobLib/common-rob/CAsservissementBase.cpp
 CPP_FILES += ./ext/CppRobLib/common-rob/CRouesBase.cpp
+CPP_FILES += ./ext/CppRobLib/ConsoleInteractiveMenu/console_interaction.cpp
 
 # configurable options
 OPTIONS = -DF_CPU=600000000 -DUSB_DUAL_SERIAL -DLAYOUT_US_ENGLISH -DUSING_MAKEFILE
