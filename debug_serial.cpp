@@ -31,27 +31,27 @@ void CDebugSerial::page_commande_moteurs()
     DECLARE_PAGE("Commande moteurs", CDebugSerial::page_commande_moteurs)
     DECLARE_ACTION('a', "Arrêt moteurs", CDebugSerial::arret_moteurs)
 
-    DECLARE_ACTION('q', "Gauche -50%", CDebugSerial::cde_mot_G_M1)
+    DECLARE_ACTION('q', "Gauche -10%", CDebugSerial::cde_mot_G_M1)
     DECLARE_ACTION('s', "Gauche -25%", CDebugSerial::cde_mot_G_M2)
-    DECLARE_ACTION('d', "Gauche -10%", CDebugSerial::cde_mot_G_M3)
+    DECLARE_ACTION('d', "Gauche -50%", CDebugSerial::cde_mot_G_M3)
 
     DECLARE_ACTION('k', "Gauche +10%", CDebugSerial::cde_mot_G_P1)
     DECLARE_ACTION('l', "Gauche +25%", CDebugSerial::cde_mot_G_P2)
     DECLARE_ACTION('m', "Gauche +50%", CDebugSerial::cde_mot_G_P3)
 
 
-    DECLARE_ACTION('w', "Droit -50%", CDebugSerial::cde_mot_D_M1)
+    DECLARE_ACTION('w', "Droit -10%", CDebugSerial::cde_mot_D_M1)
     DECLARE_ACTION('x', "Droit -25%", CDebugSerial::cde_mot_D_M2)
-    DECLARE_ACTION('c', "Droit -10%", CDebugSerial::cde_mot_D_M3)
+    DECLARE_ACTION('c', "Droit -50%", CDebugSerial::cde_mot_D_M3)
 
     DECLARE_ACTION('v', "Droit +10%", CDebugSerial::cde_mot_D_P1)
     DECLARE_ACTION('b', "Droit +25%", CDebugSerial::cde_mot_D_P2)
     DECLARE_ACTION('n', "Droit +50%", CDebugSerial::cde_mot_D_P3)
 
 
-    DECLARE_ACTION('r', "Gauche & Droit -50%", CDebugSerial::cde_mot_GD_M1)
+    DECLARE_ACTION('r', "Gauche & Droit -10%", CDebugSerial::cde_mot_GD_M1)
     DECLARE_ACTION('t', "Gauche & Droit -25%", CDebugSerial::cde_mot_GD_M2)
-    DECLARE_ACTION('y', "Gauche & Droit -10%", CDebugSerial::cde_mot_GD_M3)
+    DECLARE_ACTION('y', "Gauche & Droit -50%", CDebugSerial::cde_mot_GD_M3)
 
     DECLARE_ACTION('i', "Gauche & Droit +10%", CDebugSerial::cde_mot_GD_P1)
     DECLARE_ACTION('o', "Gauche & Droit +25%", CDebugSerial::cde_mot_GD_P2)
