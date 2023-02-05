@@ -16,6 +16,7 @@
 // TODO : introduire la notion de rollback pour recommencer l'écriture à l'index "0" en cas de débordement
 // et assurer ainsi l'enregistrement des X dernières secondes
 // La première colonne étant l'heure, il suffira dans Excel de trier par ordre croissant pour remttre tout dans le bon ordre avant d'exploiter
+// Vu avec Guigui : en mode rollback mettre un arrêt de l'enregistrement sur convergence confirmée
 
 // Pour pouvoir utiliser la 2ème zone RAM (large buffer), la structure et le buffer ne sont pas
 // déclarés dans la classe
@@ -33,14 +34,15 @@ typedef struct
     float cde_moteur_d;
     float vitesse_avance_robot;
     float vitesse_rotation_robot;
+    float consigne_vitesse_avance;
+    float consigne_vitesse_rotation;
     int compteur_diag_blocage;
     char diag_blocage;
     char convergence_rapide;
     char convergence_conf;
-
 }tLogData;
 
-static const int NBRE_LIGNES = 8000;
+static const int NBRE_LIGNES = 7500;
 // Le mot clé "DMAMEM" permet d'utiliser le 2ème buffer RAM
 DMAMEM static tLogData m_datas[NBRE_LIGNES];
 
@@ -86,10 +88,12 @@ bool CDataLogger::step()
     m_datas[m_index].teta_pos =                 Application.m_asservissement.angle_robot;
     m_datas[m_index].erreur_distance =          Application.m_asservissement.erreur_distance;
     m_datas[m_index].erreur_angle =             Application.m_asservissement.erreur_angle;
-    m_datas[m_index].cde_moteur_g =             Application.m_asservissement.cde_moteur_G;
-    m_datas[m_index].cde_moteur_d =             Application.m_asservissement.cde_moteur_D;
+    m_datas[m_index].cde_moteur_g =             Application.m_roues.m_cde_roue_G;
+    m_datas[m_index].cde_moteur_d =             Application.m_roues.m_cde_roue_D;
     m_datas[m_index].vitesse_avance_robot =     Application.m_asservissement.vitesse_avance_robot;
     m_datas[m_index].vitesse_rotation_robot =   Application.m_asservissement.vitesse_rotation_robot;
+    m_datas[m_index].consigne_vitesse_avance =  Application.m_asservissement.consigne_vitesse_avance;
+    m_datas[m_index].consigne_vitesse_rotation = Application.m_asservissement.consigne_vitesse_rotation;
     m_datas[m_index].compteur_diag_blocage =    Application.m_asservissement.compteur_diag_blocage;
     m_datas[m_index].diag_blocage =             Application.m_asservissement.diag_blocage;
     m_datas[m_index].convergence_rapide =       Application.m_asservissement.convergence_rapide;
@@ -106,7 +110,7 @@ bool CDataLogger::step()
 void CDataLogger::print()
 {
 
-    Serial.printf("Time; codeur_g; codeur_d; x_pos; y_pos; teta_pos; erreur_distance; erreur_angle; cde_moteur_g; cde_moteur_d; vitesse_avance_robot; vitesse_rotation_robot; compteur_diag_blocage; diag_blocage; convergence_rapide; convergence_conf");
+    Serial.printf("Time; codeur_g; codeur_d; x_pos; y_pos; teta_pos; erreur_distance; erreur_angle; cde_moteur_g; cde_moteur_d; vitesse_avance_robot; vitesse_rotation_robot; consigne_vitesse_avance; consigne_vitesse_rotation; compteur_diag_blocage; diag_blocage; convergence_rapide; convergence_conf");
     Serial.printf("\n\r");
     for (long i=0; i<m_index; i++)
     {
@@ -122,6 +126,8 @@ void CDataLogger::print()
         Serial.printf("%f;", m_datas[i].cde_moteur_d);
         Serial.printf("%f;", m_datas[i].vitesse_avance_robot);
         Serial.printf("%f;", m_datas[i].vitesse_rotation_robot);
+        Serial.printf("%f;", m_datas[i].consigne_vitesse_avance);
+        Serial.printf("%f;", m_datas[i].consigne_vitesse_rotation);
         Serial.printf("%d;", m_datas[i].compteur_diag_blocage);
         Serial.printf("%d;", m_datas[i].diag_blocage);
         Serial.printf("%d;", m_datas[i].convergence_rapide);
