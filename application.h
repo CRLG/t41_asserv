@@ -21,10 +21,10 @@
 #define PIN_Mot2_PWM  (37)
 #define PIN_Mot3_PWM  (12)
 
-#define PIN_Mot1_Sens1 (34)
-#define PIN_Mot1_Sens2 (35)
+#define PIN_Mot1_Sens1 (35)
+#define PIN_Mot1_Sens2 (34)
 
-#define PIN_Mot2_Sens1 (39)
+#define PIN_Mot2_Sens1 (38)
 #define PIN_Mot2_Sens2 (39)
 
 #define PIN_GPIO_3    (14)
