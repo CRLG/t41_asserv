@@ -70,7 +70,7 @@ void CDebugSerial::page_commande_mouvements()
     DECLARE_ACTION('x', "CommandeMouvementDistanceAngle(0, PI/2.)", CDebugSerial::cde_angle2)
     DECLARE_ACTION('c', "CommandeMouvementDistanceAngle(0, PI)", CDebugSerial::cde_angle3)
     DECLARE_ACTION('v', "CommandeMouvementDistanceAngle(0, -PI/4.)", CDebugSerial::cde_angle4)
-    DECLARE_ACTION('b', "CommandeMouvementDistanceAngle(0, PI/2.)", CDebugSerial::cde_angle5)
+    DECLARE_ACTION('b', "CommandeMouvementDistanceAngle(0, -PI/2.)", CDebugSerial::cde_angle5)
     DECLARE_ACTION('n', "CommandeMouvementDistanceAngle(0, -PI)", CDebugSerial::cde_angle6)
 }
 
