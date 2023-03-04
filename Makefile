@@ -52,6 +52,10 @@ INCLUDE_PATHS += -I./ext
 INCLUDE_PATHS += -I./ext/CppRobLib
 INCLUDE_PATHS += -I./ext/CppRobLib/common-rob
 INCLUDE_PATHS += -I./ext/CppRobLib/ConsoleInteractiveMenu/
+INCLUDE_PATHS += -I./ext/CppRobLib/Communication/DataEncoderDecoder
+INCLUDE_PATHS += -I./ext/CppRobLib/Communication/Messenger
+INCLUDE_PATHS += -I./ext/CppRobLib/Communication/Messenger/DatabaseAsservissementDeporte
+
 
 INCLUDE_PATHS += -I$(TEENSYLIB_PATH)/cores
 INCLUDE_PATHS += -I$(TEENSYLIB_PATH)/cores/teensy4
@@ -83,10 +87,27 @@ CPP_FILES += ./CCodeurs.cpp
 CPP_FILES += ./debug_serial.cpp
 CPP_FILES += ./CRoues.cpp
 CPP_FILES += ./data_logger.cpp
+CPP_FILES += ./MessengerAsservissementDeporte.cpp
 
 CPP_FILES += ./ext/CppRobLib/common-rob/CAsservissementBase.cpp
 CPP_FILES += ./ext/CppRobLib/common-rob/CRouesBase.cpp
 CPP_FILES += ./ext/CppRobLib/ConsoleInteractiveMenu/console_interaction.cpp
+
+CPP_FILES += ./ext/CppRobLib/Communication/DataEncoderDecoder/data_encoder_decoder.cpp
+CPP_FILES += ./ext/CppRobLib/Communication/Messenger/databasebase.cpp
+CPP_FILES += ./ext/CppRobLib/Communication/Messenger/messagebase.cpp
+CPP_FILES += ./ext/CppRobLib/Communication/Messenger/nodebase.cpp
+CPP_FILES += ./ext/CppRobLib/Communication/Messenger/messengerinterfacebase.cpp
+CPP_FILES += ./ext/CppRobLib/Communication/Messenger/transporterbase.cpp
+CPP_FILES += ./ext/CppRobLib/Communication/Messenger/transportergeneric.cpp
+CPP_FILES += ./ext/CppRobLib/Communication/Messenger/DatabaseAsservissementDeporte/databaseasservissementdeporte.cpp
+CPP_FILES += ./ext/CppRobLib/Communication/Messenger/DatabaseAsservissementDeporte/message_commande_mouvement_distance_angle.cpp
+CPP_FILES += ./ext/CppRobLib/Communication/Messenger/DatabaseAsservissementDeporte/message_commande_mouvement_xy_a.cpp
+CPP_FILES += ./ext/CppRobLib/Communication/Messenger/DatabaseAsservissementDeporte/message_commande_mouvement_xy_b.cpp
+CPP_FILES += ./ext/CppRobLib/Communication/Messenger/DatabaseAsservissementDeporte/message_commande_mouvement_xy.cpp
+CPP_FILES += ./ext/CppRobLib/Communication/Messenger/DatabaseAsservissementDeporte/message_commande_mouvement_xy_teta.cpp
+CPP_FILES += ./ext/CppRobLib/Communication/Messenger/DatabaseAsservissementDeporte/message_commande_vitesse_mouvement.cpp
+CPP_FILES += ./ext/CppRobLib/Communication/Messenger/DatabaseAsservissementDeporte/message_etat_asservissement.cpp
 
 # configurable options
 OPTIONS = -DF_CPU=600000000 -DUSB_DUAL_SERIAL -DLAYOUT_US_ENGLISH -DUSING_MAKEFILE

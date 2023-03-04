@@ -1,6 +1,9 @@
 .
 ext/CppRobLib/common-rob
 ext/CppRobLib/ConsoleInteractiveMenu
+ext/CppRobLib/Communication/Messenger
+ext/CppRobLib/Communication/Messenger/DatabaseAsservissementDeporte
+ext/CppRobLib/Communication/DataEncoderDecoder
 ext/teensylib/cores/teensy4
 ext/teensylib/cores/teensy4/avr
 ext/teensylib/cores/teensy4/debug

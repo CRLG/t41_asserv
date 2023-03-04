@@ -6,90 +6,7 @@
 #include "EEPROM.h"
 #include "FreqMeasure.h"
 
-#include <imx_rt1060_i2c_driver.h>
-#include <i2c_driver.h>
-#include <i2c_driver_wire.h>
-
-// I2C
-const uint8_t slave_address = 0x4D; // à vériier : adresse I2C 7 ou 8 bits ?
-I2CSlave& slave = Slave;
-void after_receive(size_t length, uint16_t address);
-void before_transmit(uint16_t address);
-
-// Double receive buffers to hold data from master.
-const size_t slave_rx_buffer_size = 4;
-uint8_t slave_rx_buffer[slave_rx_buffer_size] = {};
-uint8_t slave_rx_buffer_2[slave_rx_buffer_size] = {};
-volatile size_t slave_bytes_received = 0;
-
-const size_t slave_tx_buffer_size = 32;
-uint8_t slave_tx_buffer[slave_tx_buffer_size] = {};
-
-void log_message_received();
-
-
 extern "C" uint32_t set_arm_clock(uint32_t frequency); // required prototype
-
-
-// I2C
-// Called by the I2C interrupt service routine.
-// This method must be as fast as possible.
-// Do not perform IO in it.
-void after_receive(size_t length, uint16_t address) {
-    Serial.printf("after_receive : len=%d\n\r", length);
-    // This is the only time we can guarantee that the
-    // receive buffer is not changing.
-    // Copy the content so we can handle it in the main loop.
-    if (!slave_bytes_received) {
-        memcpy(slave_rx_buffer_2, slave_rx_buffer, length);
-        slave_bytes_received = length;
-    }
-    // else ignore this message because the main loop hasn't
-    // handled the previous one yet.
-}
-
-void log_message_received() {
-    if (slave.has_error()) {
-        if (slave.error() == I2CError::buffer_overflow) {
-            Serial.println("App: Buffer Overflow. (Master sent too many bytes.)");
-        } else {
-            Serial.println("App: Unexpected error");
-        }
-    }
-    Serial.print("App: Slave received ");
-    Serial.print(slave_bytes_received);
-    Serial.print(" bytes: ");
-    for(size_t i=0; i<slave_bytes_received; i++) {
-        Serial.print(slave_rx_buffer_2[i]);
-        Serial.print(", ");
-    }
-    Serial.println();
-}
-
-
-void before_transmit(uint16_t address)
-{
-    Serial.printf("before_transmit");
-
-    int i=0;
-    //slave_tx_buffer[i++]++;
-    //slave_tx_buffer[i++]++;
-    slave_tx_buffer[i++] = 0xBC;
-    slave_tx_buffer[i++] = 0xDE;
-    slave_tx_buffer[i++] = 0xFF;
-
-/*
-    slave_tx_buffer[i++] = 0x12;
-    slave_tx_buffer[i++] = 0x34;
-    slave_tx_buffer[i++] = 0x56;
-    slave_tx_buffer[i++] = 0x78;
-    slave_tx_buffer[i++] = 0x9A;
-    slave_tx_buffer[i++] = 0xBC;
-    slave_tx_buffer[i++] = 0xDE;
-    slave_tx_buffer[i++] = 0xFF;
-*/
-}
-
 
 CApplication::CApplication()
 {
@@ -143,15 +60,7 @@ void CApplication::init(void)
   EEPROM.update(3, 0x5A);
 */  
 
-    // Configure I2C Slave
-     slave.after_receive(after_receive);
-     slave.set_receive_buffer(slave_rx_buffer, slave_rx_buffer_size);
-
-     slave.before_transmit(before_transmit);
-     slave.set_transmit_buffer(slave_tx_buffer, slave_tx_buffer_size);
-
-     // Enable the slave
-     slave.listen(slave_address);
+    m_messenger_asserv_deporte.initI2C();
 }
 
 
@@ -170,10 +79,7 @@ void CApplication::run(void)
     }
 
     // I2C
-    if (slave_bytes_received) {
-        log_message_received();
-        slave_bytes_received = 0;
-    }
+    m_messenger_asserv_deporte.checkI2CReceive();
 }
 
 //___________________________________________________________________________

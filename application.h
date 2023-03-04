@@ -8,6 +8,7 @@
 #include "CRoues.h"
 #include "debug_serial.h"
 #include "data_logger.h"
+#include "MessengerAsservissementDeporte.h"
 
 
 #define PIN_LED1      (41)
@@ -64,6 +65,7 @@ public:
     CDebugSerial        m_debug_serial;
     CRoues              m_roues;
     CDataLogger         m_data_logger;
+    MessengerAsservissementDeporte  m_messenger_asserv_deporte;
 };
 
 extern CApplication Application;
