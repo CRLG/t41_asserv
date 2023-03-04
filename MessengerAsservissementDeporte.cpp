@@ -61,17 +61,20 @@ void before_transmit(uint16_t address)
     (void)address;
     Serial.printf("before_transmit");
 
-    /*
     // Pour les essais uniquement (à supprimer ensuite)
-    Application.m_messenger_i2c.m_database.m_EtatAsservissement.X_robot = -1.2;
-    Application.m_messenger_i2c.m_database.m_EtatAsservissement.Y_robot = 3.4;
-    Application.m_messenger_i2c.m_database.m_EtatAsservissement.angle_robot = -3.17;
-    Application.m_messenger_i2c.m_database.m_EtatAsservissement.convergence_rapide= 1;
-    Application.m_messenger_i2c.m_database.m_EtatAsservissement.convergence_conf= 0;
-    Application.m_messenger_i2c.m_database.m_EtatAsservissement.diag_blocage= 1;
-    Application.m_messenger_i2c.m_database.m_EtatAsservissement.ModeAsservissement= 100;
-    Application.m_messenger_i2c.m_database.m_EtatAsservissement.cde_moteur_D= 45;
-    Application.m_messenger_i2c.m_database.m_EtatAsservissement.cde_moteur_G= 23;
+    /*
+    // ______
+    Application.m_messenger_asserv_deporte.m_database.m_EtatAsservissement.X_robot = -1.2;
+    Application.m_messenger_asserv_deporte.m_database.m_EtatAsservissement.Y_robot = 3.4;
+    Application.m_messenger_asserv_deporte.m_database.m_EtatAsservissement.angle_robot = -3.17;
+    Application.m_messenger_asserv_deporte.m_database.m_EtatAsservissement.convergence_rapide= 1;
+    Application.m_messenger_asserv_deporte.m_database.m_EtatAsservissement.convergence_conf= 0;
+    Application.m_messenger_asserv_deporte.m_database.m_EtatAsservissement.diag_blocage= 1;
+    Application.m_messenger_asserv_deporte.m_database.m_EtatAsservissement.ModeAsservissement= 100;
+    Application.m_messenger_asserv_deporte.m_database.m_EtatAsservissement.cde_moteur_D= 45.4;
+    Application.m_messenger_asserv_deporte.m_database.m_EtatAsservissement.cde_moteur_G= 23.9;
+    Application.m_messenger_asserv_deporte.m_database.m_EtatAsservissement.last_cde_id = Application.m_messenger_asserv_deporte.m_last_id_cde_asserv;
+    // ______
     */
     Application.m_messenger_asserv_deporte.m_database.encode(&Application.m_messenger_asserv_deporte.m_database.m_EtatAsservissement);
 }
@@ -195,7 +198,7 @@ void MessengerAsservissementDeporte::newMessageReceived(MessageBase *msg)
         float x = m_database.m_CommandeMouvementXYTeta.x;
         float y = m_database.m_CommandeMouvementXYTeta.y;
         float teta = m_database.m_CommandeMouvementXYTeta.teta;
-        Serial.printf("Message CommandeMouvementXY_Teta(%f, %f) - ID=%d\r\n", x, y, m_last_id_cde_asserv);
+        Serial.printf("Message CommandeMouvementXY_Teta(%f, %f, %f) - ID=%d\r\n", x, y, teta, m_last_id_cde_asserv);
         Application.m_asservissement.CommandeMouvementXY_TETA(x, y, teta);
     }
     else if (msg_id == m_database.m_CommandeMouvementXY_A.getID()) {

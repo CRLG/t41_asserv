@@ -50,9 +50,9 @@ public:
     DatabaseAsservissementDeporte m_database;
     TransporterGeneric m_transporter;
 
+    unsigned short m_last_id_cde_asserv;
 
 private :
-    unsigned short m_last_id_cde_asserv;
     void initMessages();
 };
 

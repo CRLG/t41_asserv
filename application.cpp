@@ -78,6 +78,9 @@ void CApplication::run(void)
         m_debug_serial.analyze(incomingByte);
     }
 
+    // TODO :
+    // Mettre ici la RS232 n°1 ou n°2 pour pilotage du messenger via RS232 en parallèle de l'I2C
+
     // I2C
     m_messenger_asserv_deporte.checkI2CReceive();
 }
