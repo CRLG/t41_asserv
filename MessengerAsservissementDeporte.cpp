@@ -37,7 +37,7 @@ void after_receive(size_t length, uint16_t address)
     // handled the previous one yet.
 }
 
-void log_message_received() {
+void compute_i2c_message_received() {
     if (slave.has_error()) {
         if (slave.error() == I2CError::buffer_overflow) {
             Serial.println("App: Buffer Overflow. (Master sent too many bytes.)");
@@ -73,9 +73,9 @@ void before_transmit(uint16_t address)
     Application.m_messenger_asserv_deporte.m_database.m_EtatAsservissement.ModeAsservissement= 100;
     Application.m_messenger_asserv_deporte.m_database.m_EtatAsservissement.cde_moteur_D= 45.4;
     Application.m_messenger_asserv_deporte.m_database.m_EtatAsservissement.cde_moteur_G= 23.9;
-    Application.m_messenger_asserv_deporte.m_database.m_EtatAsservissement.last_cde_id = Application.m_messenger_asserv_deporte.m_last_id_cde_asserv;
     // ______
     */
+    Application.m_messenger_asserv_deporte.m_database.m_EtatAsservissement.last_cde_id = Application.m_messenger_asserv_deporte.m_last_id_cde_asserv;
     Application.m_messenger_asserv_deporte.m_database.encode(&Application.m_messenger_asserv_deporte.m_database.m_EtatAsservissement);
 }
 
@@ -125,7 +125,7 @@ void MessengerAsservissementDeporte::initI2C()
 void MessengerAsservissementDeporte::checkI2CReceive()
 {
     if (_slave_bytes_received) {
-        log_message_received();
+        compute_i2c_message_received();
         _slave_bytes_received = 0;
     }
 }
@@ -184,7 +184,7 @@ void MessengerAsservissementDeporte::newFrameReceived(tMessengerFrame *frame)
 // ______________________________________________
 void MessengerAsservissementDeporte::newMessageReceived(MessageBase *msg)
 {
-    printf("MessengerAsservissementDeporte::newMessageReceived : 0x%x", msg->getID());
+    //Serial.printf("MessengerAsservissementDeporte::newMessageReceived : 0x%x", msg->getID());
     unsigned short msg_id = msg->getID();
     if (msg_id == m_database.m_CommandeMouvementXY.getID()) {
         m_last_id_cde_asserv = m_database.m_CommandeMouvementXY.id;
@@ -228,6 +228,16 @@ void MessengerAsservissementDeporte::newMessageReceived(MessageBase *msg)
         float vitesse_angle = m_database.m_CommandeVitesseMouvement.vitesse_angle;
         Serial.printf("Message CommandeVitesseMouvement(%f, %f) - ID=%d\r\n", vitesse_avance, vitesse_angle, m_last_id_cde_asserv);
         Application.m_asservissement.CommandeVitesseMouvement(vitesse_avance, vitesse_angle);
+    }
+    else if (msg_id == m_database.m_ReinitPositionXYTeta.getID()) {
+        m_last_id_cde_asserv = m_database.m_ReinitPositionXYTeta.id;
+        float x = m_database.m_ReinitPositionXYTeta.x;
+        float y = m_database.m_ReinitPositionXYTeta.y;
+        float teta = m_database.m_ReinitPositionXYTeta.teta;
+        Serial.printf("Message ReinitPositionXYTeta(%f, %f, %f) - ID=%d\r\n", x, y, teta, m_last_id_cde_asserv);
+        Application.m_asservissement.X_robot = x;
+        Application.m_asservissement.Y_robot = y;
+        Application.m_asservissement.angle_robot = teta;
     }
 
     // else if .... tester tous les messages possibles
