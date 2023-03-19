@@ -235,10 +235,15 @@ void MessengerAsservissementDeporte::newMessageReceived(MessageBase *msg)
         float y = m_database.m_ReinitPositionXYTeta.y;
         float teta = m_database.m_ReinitPositionXYTeta.teta;
         Serial.printf("Message ReinitPositionXYTeta(%f, %f, %f) - ID=%d\r\n", x, y, teta, m_last_id_cde_asserv);
-        Application.m_asservissement.X_robot = x;
-        Application.m_asservissement.Y_robot = y;
-        Application.m_asservissement.angle_robot = teta;
+        Application.m_asservissement.setPosition_XYTeta(x, y, teta);
     }
+    else if (msg_id == m_database.m_CommandeIndiceSportivite.getID()) {
+        m_last_id_cde_asserv = m_database.m_ReinitPositionXYTeta.id;
+        float indice_sportivite = m_database.m_CommandeIndiceSportivite.indice_sportivite;
+        Serial.printf("Message CommandeIndiceSportivite(%f) - ID=%d\r\n", indice_sportivite, m_last_id_cde_asserv);
+        Application.m_asservissement.setIndiceSportivite(indice_sportivite);
+    }
+
 
     // else if .... tester tous les messages possibles
 }

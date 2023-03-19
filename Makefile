@@ -108,6 +108,7 @@ CPP_FILES += ./ext/CppRobLib/Communication/Messenger/DatabaseAsservissementDepor
 CPP_FILES += ./ext/CppRobLib/Communication/Messenger/DatabaseAsservissementDeporte/message_commande_mouvement_xy_teta.cpp
 CPP_FILES += ./ext/CppRobLib/Communication/Messenger/DatabaseAsservissementDeporte/message_commande_vitesse_mouvement.cpp
 CPP_FILES += ./ext/CppRobLib/Communication/Messenger/DatabaseAsservissementDeporte/message_reinit_position_xy_teta.cpp
+CPP_FILES += ./ext/CppRobLib/Communication/Messenger/DatabaseAsservissementDeporte/message_commande_indice_sportivite.cpp
 CPP_FILES += ./ext/CppRobLib/Communication/Messenger/DatabaseAsservissementDeporte/message_etat_asservissement.cpp
 
 # configurable options
